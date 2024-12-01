@@ -8,6 +8,9 @@
 
 #pragma once
 #include "SDL/SDL.h"
+#include <unordered_map>
+#include <string>
+#include <vector>
 
 // Vector2 struct just stores x/y coordinates
 // (for now)
@@ -22,34 +25,24 @@ class Game
 {
 public:
 	Game();
-	// Initialize the game
-	bool Initialize();
-	// Runs the game loop until the game is over
-	void RunLoop();
-	// Shutdown the game
-	void Shutdown();
-private:
-	// Helper functions for the game loop
-	void ProcessInput();
-	void UpdateGame();
-	void GenerateOutput();
 
-	// Window created by SDL
+private:
+
+
+	// 맵 텍스쳐 로딩
+	std::unordered_map<std::string, SDL_Texture*> mTextures;
+
+	// 게임의 모든 액터
+	std::vector<class Actor*> mActors;
+	// 팬딩
+	std::vector<class Actor*> mPendingActors;
+
+	// 스프라이트 컴포넌트
+	std::vector<class SpriteComponent*> mSprites;
+
 	SDL_Window* mWindow;
-	// Renderer for 2D drawing
 	SDL_Renderer* mRenderer;
-	// Number of ticks since start of game
 	Uint32 mTicksCount;
-	// Game should continue to run
 	bool mIsRunning;
-	
-	// Pong specific
-	// Direction of paddle
-	int mPaddleDir;
-	// Position of paddle
-	Vector2 mPaddlePos;
-	// Position of ball
-	Vector2 mBallPos;
-	// Velocity of ball
-	Vector2 mBallVel;
+
 };
